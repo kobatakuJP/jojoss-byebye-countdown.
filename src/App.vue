@@ -7,8 +7,7 @@
           autoplay
           loop
           muted
-        >
-        </video>
+        ></video>
       </div>
     </div>
     <div class="content">
@@ -48,7 +47,7 @@ body {
   z-index: 1;
   width: 100%;
   height: 100%;
-  background-color: rgba(32, 38, 46, 0.8);
+  background-color: rgba(32, 38, 46, 0.9);
 }
 .video-container {
   position: fixed;
