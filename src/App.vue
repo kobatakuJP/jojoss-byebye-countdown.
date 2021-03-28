@@ -14,7 +14,7 @@
     <div class="content">
       <Countdownify
         msg="ジョジョSS サ終"
-        :goalTime="[2021, 4, 13]"
+        :goalTime="1618239600000"
         backgroundColor="rgba(0,0,0,0)"
         @its-time="timeup"
       />
