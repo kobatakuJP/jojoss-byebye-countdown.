@@ -1,25 +1,27 @@
 <template>
-  <div id="app">
-    <div class="video-container">
-      <div class="video-wrap">
-        <video
-          src="../public/jojossmovie1_supershrink.mp4"
-          autoplay
-          loop
-          muted
-          playsinline
-        ></video>
+  <transition name="fade" v-on:after-leave="afterLeave">
+    <div id="app" v-if="show">
+      <div class="video-container">
+        <div class="video-wrap">
+          <video
+            src="../public/jojossmovie1_supershrink.mp4"
+            autoplay
+            loop
+            muted
+            playsinline
+          ></video>
+        </div>
+      </div>
+      <div class="content">
+        <Countdownify
+          msg="ジョジョSS サ終"
+          :goalTime="Date.now() + 2000"
+          backgroundColor="rgba(0,0,0,0)"
+          @its-time="timeup"
+        />
       </div>
     </div>
-    <div class="content">
-      <Countdownify
-        msg="ジョジョSS サ終"
-        :goalTime="1618239600000"
-        backgroundColor="rgba(0,0,0,0)"
-        @its-time="timeup"
-      />
-    </div>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -30,6 +32,21 @@ export default {
   name: "App",
   components: {
     Countdownify,
+  },
+  data() {
+    return {
+      show: true,
+    };
+  },
+  methods: {
+    timeup: async function () {
+      this.show = false;
+    },
+    afterLeave: async function () {
+      const resp = await fetch("/.netlify/functions/checktime");
+      const json = await resp.json();
+      window.location.href = json["url"];
+    },
   },
 };
 </script>
@@ -88,5 +105,14 @@ video {
     left: 50%;
     transform: translateX(-50%);
   }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: 2s opacity 0.5s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
