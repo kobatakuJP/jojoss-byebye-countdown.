@@ -29,7 +29,7 @@ import Countdownify from "vue-countdownify";
 import "vue-countdownify/dist/vue-countdownify.css";
 
 export default {
-  name: "App",
+  name: "CouontdownPage",
   components: {
     Countdownify,
   },

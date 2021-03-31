@@ -1,8 +1,8 @@
 import Vue from 'vue'
-import App from './CouontdownPage.vue'
+import CouontdownPage from './CouontdownPage.vue'
 
 Vue.config.productionTip = false
 
 new Vue({
-  render: h => h(App),
+  render: h => h(CouontdownPage),
 }).$mount('#app')
