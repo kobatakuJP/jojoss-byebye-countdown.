@@ -20,6 +20,7 @@
           @its-time="timeup"
         />
       </div>
+      <SNSShareButtons class="sns-share-buttons"/>
     </div>
   </transition>
 </template>
@@ -27,11 +28,13 @@
 <script>
 import Countdownify from "vue-countdownify";
 import "vue-countdownify/dist/vue-countdownify.css";
+import SNSShareButtons from "./components/SNSShareButtons.vue"
 
 export default {
   name: "CouontdownPage",
   components: {
     Countdownify,
+    SNSShareButtons
   },
   data() {
     return {
@@ -114,5 +117,12 @@ video {
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
+}
+
+.sns-share-buttons {
+  position: fixed;
+  right: 3px;
+  bottom: 3px;
+  z-index: 2;
 }
 </style>
