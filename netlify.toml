@@ -2,3 +2,13 @@
   command = "npm run build"
   functions = "lambda"
   publish = "dist"
+
+[[redirects]]
+  from = "/byebye-and-thanks-jojoss-20210413"
+  to = "/goaled.html"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
