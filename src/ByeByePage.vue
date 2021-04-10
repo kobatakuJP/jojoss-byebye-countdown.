@@ -10,18 +10,15 @@
           muted
           playsinline
           @play="startvideo"
-        >
-          loading...
-        </video>
+        ></video>
       </div>
     </transition>
-
     <transition name="fade">
       <div class="blur-loading" v-show="blurLoading">
         <transition name="roll-up">
           <div class="endroll" v-show="rollStandby">
             <h2>Thank you JOJO SS!</h2>
-            <h3>for...</h3>
+            <h3>Special thanks to...</h3>
             <p class="bold">BANDAI NAMCO Entertainment Inc.</p>
             <p class="bold">Drecom Co., Ltd.</p>
             <p class="bold">集英社</p>
@@ -38,9 +35,17 @@
         </transition>
       </div>
     </transition>
-    <transition name="fade">
+    <transition name="fade" @after-enter="popShow">
       <div class="cover-roll" v-show="coverRoll"></div>
     </transition>
+    <transition name="fade-slow" @after-enter="popShow">
+      <div v-show="jojoSSLogo" class="jojoss-logo-wrapper">
+        <div class="jojoss-logo-inner-wrapper">
+          <img class="jojoss-logo" src="./assets/jojoss-logo.png" />
+        </div>
+      </div>
+      ></transition
+    >
     <transition name="fade">
       <SNSShareButtons v-show="finished" class="sns-share-buttons" />
     </transition>
@@ -63,15 +68,21 @@ export default {
       rollStandby: true, // falseにすると始まる
       blurLoading: false, // loadingをぼかす
       coverRoll: false, // エンドロールを覆う
+      jojoSSLogo: false,
       finished: false, // アニメーション完了
+      shows: [
+        // アニメーションを逆順に入れる
+        () => (this.finished = true),
+        () => (this.jojoSSLogo = true),
+        () => (this.coverRoll = true),
+      ],
     };
   },
-  mounted: function() {
+  mounted: function () {
     this.showVideo = true;
   },
   methods: {
     async startvideo() {
-      console.log("startvideo");
       await new Promise((resolve) => {
         setTimeout(() => {
           resolve();
@@ -89,7 +100,13 @@ export default {
           resolve();
         }, 55000);
       });
-      this.coverRoll = true;
+      // ここからは流れの通りに
+      this.popShow();
+    },
+    /** 次に表示するものをpopする */
+    popShow() {
+      const next = this.shows.pop();
+      next ? next() : null;
     },
   },
 };
@@ -156,6 +173,19 @@ body {
   height: 100%;
   background-color: var(--jojo-black);
 }
+.jojoss-logo-wrapper {
+  display: table;
+  position: fixed;
+  top: 0;
+  text-align: center;
+  height: 100%;
+  width: 100%;
+}
+.jojoss-logo-inner-wrapper {
+  display: table-cell;
+  height: 100%;
+  vertical-align: middle;
+}
 .sns-share-buttons {
   position: fixed;
   right: 3px;
@@ -168,6 +198,14 @@ body {
 }
 .fade-enter,
 .fade-leave-to {
+  opacity: 0;
+}
+.fade-slow-enter-active,
+.fade-slow-leave-active {
+  transition: opacity 7s;
+}
+.fade-slow-enter,
+.fade-slow-leave-to {
   opacity: 0;
 }
 .roll-up-leave-active {
