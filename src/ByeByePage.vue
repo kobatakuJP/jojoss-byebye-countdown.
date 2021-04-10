@@ -46,6 +46,9 @@
       </div>
       ></transition
     >
+    <transition name="fade" @after-enter="popShow">
+      <div v-show="kan" class="kan">完</div>
+    </transition>
     <transition name="fade">
       <SNSShareButtons v-show="finished" class="sns-share-buttons" />
     </transition>
@@ -69,10 +72,12 @@ export default {
       blurLoading: false, // loadingをぼかす
       coverRoll: false, // エンドロールを覆う
       jojoSSLogo: false,
+      kan: false,
       finished: false, // アニメーション完了
       shows: [
         // アニメーションを逆順に入れる
         () => (this.finished = true),
+        () => (this.kan = true),
         () => (this.jojoSSLogo = true),
         () => (this.coverRoll = true),
       ],
@@ -186,10 +191,18 @@ body {
   height: 100%;
   vertical-align: middle;
 }
+.kan {
+  position: fixed;
+  right: 1rem;
+  bottom: 5px;
+  text-shadow: 0px 0px 2px #000, 2px 2px 3px #000;
+  font-weight: bold;
+  font-size: 5rem;
+}
 .sns-share-buttons {
   position: fixed;
   right: 3px;
-  bottom: 3px;
+  top: 3px;
   z-index: 2;
 }
 .fade-enter-active,
