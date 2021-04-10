@@ -1,14 +1,20 @@
 <template>
-  <div class="video-wrapper">
+  <div id="app">
+    <div class="video-wrapper">
       <video
+        class="loading"
         src="./assets/loading.mp4"
         autoplay
         loop
         muted
         playsinline
       ></video>
-    <div v-show="finished">
-      <SNSShareButtons class="sns-share-buttons" />
+      <div v-show="finished">
+        <SNSShareButtons class="sns-share-buttons" />
+      </div>
+    </div>
+    <div class="endrole">
+
     </div>
   </div>
 </template>
@@ -42,14 +48,24 @@ body {
   perspective: 1000px;
   overflow: hidden;
 }
-.video-wrapper{
-  text-align: center;
+#app {
+  width: 100%;
   height: 100%;
 }
-video {
-    width:auto;
-    height:inherit;
-    max-width:100%;
-    max-height:100%;
+.video-wrapper {
+  text-align: center;
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  max-height: 100%;
+}
+.loading {
+  width: 100%;
+  height: 100%;
+}
+.endrole {
+  position: fixed;
+  width: 100%;
+  height: 100%;
 }
 </style>
