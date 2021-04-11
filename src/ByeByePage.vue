@@ -41,7 +41,11 @@
     <transition name="fade-slow" @after-enter="popShow">
       <div v-show="jojoSSLogo" class="jojoss-logo-wrapper">
         <div class="jojoss-logo-inner-wrapper">
-          <img class="jojoss-logo" src="./assets/jojoss-logo.png" />
+          <img
+            @click="currentClickLogo"
+            class="jojoss-logo"
+            src="./assets/jojoss-logo.png"
+          />
         </div>
       </div>
       ></transition
@@ -60,6 +64,39 @@
 import "vue-countdownify/dist/vue-countdownify.css";
 import SNSShareButtons from "./components/SNSShareButtons.vue";
 
+const ANIMATE_CSS_LIST = [
+  "animate__shakeX",
+  "animate__flash",
+  "animate__pulse",
+  "animate__rubberBand",
+  "animate__shakeX",
+  "animate__shakeY",
+  "animate__headShake",
+  "animate__swing",
+  "animate__tada",
+  "animate__wobble",
+  "animate__jello",
+  "animate__heartBeat",
+  "animate__backInDown",
+  "animate__backInLeft",
+  "animate__backInRight",
+  "animate__backInUp",
+  "animate__fadeInUp",
+  "animate__fadeIn",
+  "animate__fadeInDown",
+  "animate__fadeInTopLeft",
+  "animate__fadeInTopRight",
+  "animate__fadeInBottomLeft",
+  "animate__fadeInBottomRight",
+  "animate__flip",
+  "animate__lightSpeedInRight",
+  "animate__lightSpeedInLeft",
+  "animate__rotateIn",
+  "animate__rollIn",
+  "animate__zoomInDown",
+  "animate__zoomInUp",
+];
+
 export default {
   name: "ByeByePage",
   components: {
@@ -76,11 +113,15 @@ export default {
       finished: false, // アニメーション完了
       shows: [
         // アニメーションを逆順に入れる
-        () => (this.finished = true),
+        () => {
+          this.currentClickLogo = this.clickLogo;
+          this.finished = true;
+        },
         () => (this.kan = true),
         () => (this.jojoSSLogo = true),
         () => (this.coverRoll = true),
       ],
+      currentClickLogo: () => {}, // 最初はなにもしない。後で置き換える
     };
   },
   mounted: function () {
@@ -113,11 +154,27 @@ export default {
       const next = this.shows.pop();
       next ? next() : null;
     },
+    /** ロゴがクリックされた時の動作 */
+    clickLogo(e) {
+      if (e && e.target && e.target.classList) {
+        e.target.addEventListener("animationend", () => {
+          e.target.setAttribute("class", "jojoss-logo");
+        });
+        e.target.classList.add("animate__animated", this.getRandAnimeCss());
+        console.log(e.target.classList);
+      }
+    },
+    getRandAnimeCss() {
+      return ANIMATE_CSS_LIST[
+        Math.floor(Math.random() * ANIMATE_CSS_LIST.length)
+      ];
+    },
   },
 };
 </script>
 
 <style>
+@import "/animate.css/animate.compat.css";
 /** 変数 */
 :root {
   --roll-up-time: 60s;
