@@ -57,6 +57,9 @@
     <transition name="fade" @after-enter="popShow">
       <SNSShareButtons v-show="finished" class="sns-share-buttons" />
     </transition>
+    <div class="info" v-show="finished">
+      animation by <a href="https://animate.style/" target="_blank" style="color: white">Animate.css</a>
+    </div>
   </div>
 </template>
 
@@ -330,6 +333,13 @@ body {
   top: 3px;
   z-index: 2;
 }
+.info {
+  position: fixed;
+  top: 0;
+  font-size: 0.5rem;
+}
+
+/** 以降transition */
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 3s;
