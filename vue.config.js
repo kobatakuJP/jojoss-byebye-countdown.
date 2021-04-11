@@ -8,7 +8,7 @@ module.exports = {
             entry: 'src/goaled.js',
             template: 'public/goaled.html',
             filename: 'goaled.html',
-            title: 'また会おうッ！ジョジョSSのことが嫌いじゃあなけりゃあな！',
+            title: 'ジョジョSSエンディングページ(非公式)',
         }
     }
 }
