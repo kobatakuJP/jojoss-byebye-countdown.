@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" @click="punch">
     <transition name="fade">
       <div class="video-wrapper" v-show="showVideo">
         <video
@@ -55,7 +55,11 @@
       <div v-show="kan" class="kan">完</div>
     </transition>
     <transition name="fade" @after-enter="popShow">
-      <SNSShareButtons v-show="finished" class="sns-share-buttons" msg="ジョジョSSエンディングページ(非公式)"/>
+      <SNSShareButtons
+        v-show="finished"
+        class="sns-share-buttons"
+        msg="ジョジョSSエンディングページ(非公式)"
+      />
     </transition>
     <transition name="fade">
       <div class="info" v-show="finished">
@@ -69,6 +73,12 @@
         >
       </div>
     </transition>
+    <div
+      ref="puncher"
+      :style="puncherStyle"
+      v-show="isPunch"
+      class="animate__animated animate__rubberBand"
+    ></div>
   </div>
 </template>
 
@@ -172,6 +182,8 @@ const ANIMATE_CSS_LIST = [
   "animate__slideOutUp",
 ];
 
+const PUNCH_WORD = ["オラ", "無駄", "ドラァ", "メメタァ", "ズキュン"];
+
 export default {
   name: "ByeByePage",
   components: {
@@ -203,6 +215,16 @@ export default {
         () => (this.coverRoll = true),
       ],
       currentClickLogo: () => {}, // 最初はなにもしない。後で置き換える
+      puncherStyle: {
+        position: "fixed",
+        left: "100px",
+        top: "100px",
+        "user-select": "none",
+        "font-weight": "bold",
+        "animation-duration": ".1s",
+      },
+      isPunch: false,
+      punchID: -1,
     };
   },
   mounted: function () {
@@ -249,6 +271,25 @@ export default {
         Math.floor(Math.random() * ANIMATE_CSS_LIST.length)
       ];
     },
+    punch(e) {
+      this.isPunch = false;
+      this.$refs.puncher.innerText =
+        PUNCH_WORD[Math.floor(Math.random() * PUNCH_WORD.length)];
+      this.puncherStyle.left = Math.floor(this.randPosition(e.x)) + "px";
+      this.puncherStyle.top = Math.floor(this.randPosition(e.y)) + "px";
+      if (this.punchID > -1) {
+        // パンチ済みならclearをキャンセル
+        clearTimeout(this.punchID);
+      }
+      this.punchID = setTimeout(() => {
+        this.isPunch = false;
+      }, 1000);
+      setTimeout(() => this.isPunch = true, 0)
+    },
+    randPosition(v) {
+      const fix = 10;
+      return v + Math.floor(Math.random() * fix) - fix / 2;
+    },
   },
 };
 </script>
@@ -294,6 +335,7 @@ body {
 }
 .endroll {
   position: fixed;
+  user-select: none;
   width: 100%;
   height: 100%;
   text-align: center;
