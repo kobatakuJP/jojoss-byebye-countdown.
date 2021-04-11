@@ -1,10 +1,10 @@
 <template>
   <div class="sns_box">
     <div class="sns_button twitter">
-      <a href="https://twitter.com/intent/tweet?url=https://jojoss-sasyu-countdown.netlify.app/&text=ジョジョSSのサ終をカウントダウン😢" title="Tweet"><i class="fa fa-twitter"></i></a>
+      <a :href="`https://twitter.com/intent/tweet?url=${url}&text=${msg}`" title="Tweet"><i class="fa fa-twitter"></i></a>
     </div>
     <div class="sns_button facebook">
-      <a href="https://www.facebook.com/sharer/sharer.php?u=https://jojoss-sasyu-countdown.netlify.app/" title="Facebook"><i class="fa fa-facebook"></i></a>
+      <a :href="`https://www.facebook.com/sharer/sharer.php?u=${url}`" title="Facebook"><i class="fa fa-facebook"></i></a>
     </div>
   </div>
 </template>
@@ -15,6 +15,11 @@ export default {
   props: {
     msg: String,
   },
+  data() {
+    return {
+      url: location.href
+    }
+  }
 };
 </script>
 

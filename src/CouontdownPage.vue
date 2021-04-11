@@ -20,7 +20,7 @@
           @its-time="timeup"
         />
       </div>
-      <SNSShareButtons class="sns-share-buttons"/>
+      <SNSShareButtons class="sns-share-buttons" msg="ジョジョSSのサ終をカウントダウン😢"/>
     </div>
   </transition>
 </template>

@@ -55,11 +55,20 @@
       <div v-show="kan" class="kan">完</div>
     </transition>
     <transition name="fade" @after-enter="popShow">
-      <SNSShareButtons v-show="finished" class="sns-share-buttons" />
+      <SNSShareButtons v-show="finished" class="sns-share-buttons" msg="ジョジョSSエンディングページ(非公式)"/>
     </transition>
-    <div class="info" v-show="finished">
-      animation by <a href="https://animate.style/" target="_blank" style="color: white">Animate.css</a>
-    </div>
+    <transition name="fade">
+      <div class="info" v-show="finished">
+        animation by
+        <a
+          href="https://animate.style/"
+          target="_blank"
+          style="color: white"
+          rel="noopener"
+          >Animate.css</a
+        >
+      </div>
+    </transition>
   </div>
 </template>
 
