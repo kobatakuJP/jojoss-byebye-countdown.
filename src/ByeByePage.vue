@@ -182,7 +182,22 @@ const ANIMATE_CSS_LIST = [
   "animate__slideOutUp",
 ];
 
-const PUNCH_WORD = ["オラ", "無駄", "ドラァ", "メメタァ", "ズキュン"];
+const PUNCH_WORD = [
+  "オラ",
+  "無駄",
+  "ドラァ",
+  "メメタァ",
+  "ズキュン",
+  "グッパオン",
+  "ピシガシグッグッ",
+  "ドモン",
+  "ガオン",
+  "ズアッ",
+  "シィィザーァァァッ",
+  "だが断る",
+  "ボラーレ・ヴィーア（飛んで行きな）",
+  "アリーヴェデルチ!(さよならだ)",
+];
 
 export default {
   name: "ByeByePage",
@@ -284,7 +299,7 @@ export default {
       this.punchID = setTimeout(() => {
         this.isPunch = false;
       }, 1000);
-      setTimeout(() => this.isPunch = true, 0)
+      setTimeout(() => (this.isPunch = true), 0);
     },
     randPosition(v) {
       const fix = 10;
