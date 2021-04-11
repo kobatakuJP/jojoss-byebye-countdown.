@@ -45,6 +45,7 @@
             @click="currentClickLogo"
             class="jojoss-logo"
             src="./assets/jojoss-logo.png"
+            ref="jojoSSLogo"
           />
         </div>
       </div>
@@ -53,7 +54,7 @@
     <transition name="fade" @after-enter="popShow">
       <div v-show="kan" class="kan">完</div>
     </transition>
-    <transition name="fade">
+    <transition name="fade" @after-enter="popShow">
       <SNSShareButtons v-show="finished" class="sns-share-buttons" />
     </transition>
   </div>
@@ -176,6 +177,12 @@ export default {
       shows: [
         // アニメーションを逆順に入れる
         () => {
+          this.$refs.jojoSSLogo.classList.add(
+            "animate__animated",
+            "animate__shakeX"
+          );
+        },
+        () => {
           this.currentClickLogo = this.clickLogo;
           this.finished = true;
         },
@@ -223,7 +230,6 @@ export default {
           e.target.setAttribute("class", "jojoss-logo");
         });
         e.target.classList.add("animate__animated", this.getRandAnimeCss());
-        console.log(e.target.classList);
       }
     },
     getRandAnimeCss() {
