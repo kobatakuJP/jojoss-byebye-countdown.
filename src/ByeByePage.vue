@@ -52,8 +52,14 @@
       ></transition
     >
     <transition name="fade" @after-enter="popShow">
-      <div v-show="kan" class="kan">完</div>
+      <div v-show="kan" class="kan view" @click="currentClickKan">完</div>
     </transition>
+    <img
+      v-show="kq"
+      class="killer-queen"
+      src="./assets/killerqueen.png"
+      @click="bitethedust"
+    />
     <transition name="fade" @after-enter="popShow">
       <SNSShareButtons
         v-show="finished"
@@ -212,6 +218,7 @@ export default {
       coverRoll: false, // エンドロールを覆う
       jojoSSLogo: false,
       kan: false,
+      kq: false,
       finished: false, // アニメーション完了
       shows: [
         // アニメーションを逆順に入れる
@@ -223,6 +230,8 @@ export default {
         },
         () => {
           this.currentClickLogo = this.clickLogo;
+          this.currentClickKan = this.clickKan;
+          this.kq = true;
           this.finished = true;
         },
         () => (this.kan = true),
@@ -230,6 +239,7 @@ export default {
         () => (this.coverRoll = true),
       ],
       currentClickLogo: () => {}, // 最初はなにもしない。後で置き換える
+      currentClickKan: () => {}, // 最初はなにもしない。後で置き換える
       puncherStyle: {
         position: "fixed",
         left: "100px",
@@ -281,6 +291,11 @@ export default {
         e.target.classList.add("animate__animated", this.getRandAnimeCss());
       }
     },
+    clickKan(e) {
+      if (e && e.target && e.target.classList) {
+        e.target.classList.add("slide");
+      }
+    },
     getRandAnimeCss() {
       return ANIMATE_CSS_LIST[
         Math.floor(Math.random() * ANIMATE_CSS_LIST.length)
@@ -304,6 +319,9 @@ export default {
     randPosition(v) {
       const fix = 10;
       return v + Math.floor(Math.random() * fix) - fix / 2;
+    },
+    bitethedust() {
+      window.location.href = "/?bitethedust";
     },
   },
 };
@@ -387,11 +405,31 @@ body {
 }
 .kan {
   position: fixed;
+  user-select: none;
+  background-color: var(--jojo-black);
   right: 1rem;
   bottom: 5px;
   text-shadow: 0px 0px 2px #000, 2px 2px 3px #000;
   font-weight: bold;
   font-size: 5rem;
+  z-index: 1;
+}
+.kan.slide {
+  animation: slide 2s ease forwards;
+}
+@keyframes slide {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(3rem);
+  }
+}
+.killer-queen {
+  position: fixed;
+  right: 1rem;
+  bottom: 5px;
+  height: 4rem;
 }
 .sns-share-buttons {
   position: fixed;
