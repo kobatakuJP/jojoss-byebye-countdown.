@@ -52,7 +52,7 @@
       ></transition
     >
     <transition name="fade" @after-enter="popShow">
-      <div v-show="kan" class="kan view" @click="currentClickKan">完</div>
+      <div ref="kan" v-show="kan" class="kan" @click="currentClickKan">完</div>
     </transition>
     <img
       v-show="kq"
@@ -85,6 +85,7 @@
       v-show="isPunch"
       class="animate__animated animate__rubberBand"
     ></div>
+    <div v-show="moveBitethedust" class="bitethedust-str">バイツァ・ダスト</div>
   </div>
 </template>
 
@@ -219,6 +220,7 @@ export default {
       jojoSSLogo: false,
       kan: false,
       kq: false,
+      moveBitethedust: false,
       finished: false, // アニメーション完了
       shows: [
         // アニメーションを逆順に入れる
@@ -227,11 +229,12 @@ export default {
             "animate__animated",
             "animate__shakeX"
           );
+          this.currentClickKan = this.clickKan;
+          this.$refs.kan.classList.add("jojoblack");
+          this.kq = true;
         },
         () => {
           this.currentClickLogo = this.clickLogo;
-          this.currentClickKan = this.clickKan;
-          this.kq = true;
           this.finished = true;
         },
         () => (this.kan = true),
@@ -321,6 +324,7 @@ export default {
       return v + Math.floor(Math.random() * fix) - fix / 2;
     },
     bitethedust() {
+      this.moveBitethedust = true;
       window.location.href = "/?bitethedust";
     },
   },
@@ -406,13 +410,15 @@ body {
 .kan {
   position: fixed;
   user-select: none;
-  background-color: var(--jojo-black);
   right: 1rem;
   bottom: 5px;
   text-shadow: 0px 0px 2px #000, 2px 2px 3px #000;
   font-weight: bold;
   font-size: 5rem;
   z-index: 1;
+}
+.jojoblack {
+  background-color: var(--jojo-black);
 }
 .kan.slide {
   animation: slide 2s ease forwards;
@@ -441,6 +447,17 @@ body {
   position: fixed;
   top: 0;
   font-size: 0.5rem;
+}
+.bitethedust-str {
+  position: fixed;
+  height: 100%;
+  text-align: center;
+  color: red;
+  background-color: rgba(32, 38, 46, 0.8);
+  bottom: 0;
+  font-weight: bold;
+  font-size: 6rem;
+  z-index: 10;
 }
 
 /** 以降transition */
