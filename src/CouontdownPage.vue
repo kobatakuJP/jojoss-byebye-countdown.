@@ -15,12 +15,15 @@
       <div class="content">
         <Countdownify
           msg="ジョジョSS サ終"
-          :goalTime="1618239600000"
+          :goalTime="goalTime"
           backgroundColor="rgba(0,0,0,0)"
           @its-time="timeup"
         />
       </div>
-      <SNSShareButtons class="sns-share-buttons" msg="ジョジョSSのサ終をカウントダウン😢"/>
+      <SNSShareButtons
+        class="sns-share-buttons"
+        msg="ジョジョSSのサ終をカウントダウン😢"
+      />
     </div>
   </transition>
 </template>
@@ -28,17 +31,22 @@
 <script>
 import Countdownify from "vue-countdownify";
 import "vue-countdownify/dist/vue-countdownify.css";
-import SNSShareButtons from "./components/SNSShareButtons.vue"
+import SNSShareButtons from "./components/SNSShareButtons.vue";
 
 export default {
   name: "CouontdownPage",
   components: {
     Countdownify,
-    SNSShareButtons
+    SNSShareButtons,
   },
   data() {
     return {
       show: true,
+      goalTime: new URLSearchParams(document.location.search.substring(1)).has(
+        "bitethedust"
+      )
+        ? Date.now() + 10000
+        : 1618239600000,
     };
   },
   methods: {
