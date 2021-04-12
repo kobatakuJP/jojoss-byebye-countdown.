@@ -46,7 +46,7 @@ export default {
         "bitethedust"
       )
         ? Date.now() + 10000
-        : 1618239600000,
+        : 1618290000000
     };
   },
   methods: {
